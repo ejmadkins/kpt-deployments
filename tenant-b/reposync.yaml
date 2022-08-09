@@ -1,0 +1,11 @@
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
+metadata: # kpt-merge: default/repo-sync
+  name: repo-sync
+  namespace: tenant-b
+spec:
+  sourceFormat: unstructured
+  git:
+    repo: https://github.com/ejmadkins/kpt-deployments-tenant-a.git # kpt-set: ${reposync-repo}
+    branch: dev # kpt-set: ${reposync-branch}
+    auth: none
