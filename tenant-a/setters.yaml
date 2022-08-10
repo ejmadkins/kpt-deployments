@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: # kpt-merge: /setters
+  name: setters
+  namespace: tenant-a
+data:
+  reposync-repo: "https://github.com/ejmadkins/kpt-deployments-tenant-a.git"
+  reposync-branch: "main"
