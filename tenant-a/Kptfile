@@ -1,0 +1,30 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: tenant-a
+  annotations:
+    config.kubernetes.io/local-config: "true"
+upstream:
+  type: git
+  git:
+    repo: https://github.com/ejmadkins/kpt-blueprints
+    directory: /basens
+    ref: v1
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/ejmadkins/kpt-blueprints
+    directory: /basens
+    ref: basens/v1
+    commit: 5c20438e455496d60a00c482d4d15dd5bb88af48
+info:
+  description: kpt package for provisioning namespace
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/set-namespace:v0.4.1
+      configPath: package-context.yaml
+    - image: gcr.io/kpt-fn/apply-replacements:v0.1.1
+      configPath: update-rolebinding.yaml
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
